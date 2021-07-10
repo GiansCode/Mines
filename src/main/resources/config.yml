@@ -1,0 +1,10 @@
+maxMinesAmount: 10
+minMinesAmount: 1
+
+messages:
+  minMinesAmountReached: "<red>You've reached the minimum amount of mines"
+  maxMinesAmountReached: "<red>You've reached the maximum amount of mines"
+  notEnoughMoney: "<red>You don't have enough money"
+  numberNotValid: "<red>The number isn't valid"
+  winMessage: "<green>You won %prize%$!"
+  lostMessage: "<red>You lost."

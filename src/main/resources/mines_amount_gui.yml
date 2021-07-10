@@ -1,0 +1,20 @@
+title: "&6Set the amount of mines"
+
+items:
+  add:
+    material: SPECTRAL_ARROW
+    name: "<green>Add one mine"
+    lore:
+      - ""
+      - "<gray>Click this item to add one mine"
+  remove:
+    material: SPECTRAL_ARROW
+    name: "<green>Remove one mine"
+    lore:
+      - ""
+      - "<gray>Click this item to remove one mine"
+  mines:
+    material: TNT
+    name: "<red>Mines"
+    lore:
+      - ""

@@ -1,0 +1,30 @@
+title: "&6Set balance"
+
+items:
+  customAmount:
+    material: PAPER
+    name: "<green>Set a custom amount"
+    lore:
+      - ""
+      - "<gray>Click this item to set a custom amount"
+  quarterAmount:
+    material: IRON_INGOT
+    name: "<green>Bet a quarter of your balance"
+    lore:
+      - ""
+      - "<gray>Click this item to bet a quarter of your balance"
+      - "<gold>%amount%"
+  halfAmount:
+    material: DIAMOND
+    name: "<green>Bet half of your balance"
+    lore:
+      - ""
+      - "<gray>Click this item to bet half of your balance"
+      - "<gold>%amount%"
+  fullAmount:
+    material: EMERALD
+    name: "<green>Bet all of your balance"
+    lore:
+      - ""
+      - "<gray>Click this item to bet all of your balance"
+      - "<gold>%amount%"

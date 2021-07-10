@@ -1,0 +1,6 @@
+name: Mines
+author: xQuickGlare
+version: ${project.version}
+main: io.alerium.mines.MinesPlugin
+commands:
+  mines:

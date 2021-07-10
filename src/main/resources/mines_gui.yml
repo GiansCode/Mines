@@ -1,0 +1,23 @@
+title: "&6Click the mines"
+
+items:
+  mine:
+    material: SPONGE
+    name: "<gold>Click this"
+    lore:
+      - ""
+  good:
+    material: EMERALD
+    name: "<green>You're lucky"
+    lore:
+      - ""
+  bad:
+    material: TNT
+    name: "<red>You lost"
+    lore:
+      - ""
+  end:
+    material: PAPER
+    name: "<red>End"
+    lore:
+      - ""
