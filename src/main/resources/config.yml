@@ -2,6 +2,8 @@ maxMinesAmount: 10
 minMinesAmount: 1
 
 messages:
+  startGame: "<gold>You've started a mines game with %money%$"
+  minesSelected: "<gold>You've selected %mines% mines."
   minMinesAmountReached: "<red>You've reached the minimum amount of mines"
   maxMinesAmountReached: "<red>You've reached the maximum amount of mines"
   notEnoughMoney: "<red>You don't have enough money"

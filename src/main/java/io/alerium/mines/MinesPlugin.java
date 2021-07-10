@@ -9,7 +9,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.text.DecimalFormat;
+
 public class MinesPlugin extends JavaPlugin {
+
+    public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.00");
 
     @Getter private Economy economy;
 

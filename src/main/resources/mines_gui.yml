@@ -21,3 +21,6 @@ items:
     name: "<red>End"
     lore:
       - ""
+      - "<gold>Bet money: %money%"
+      - "<gold>Multiplier: %multiplier%"
+      - "<gold>Money won: %win_money%"

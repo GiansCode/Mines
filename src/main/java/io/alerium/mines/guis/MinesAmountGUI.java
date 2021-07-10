@@ -61,6 +61,7 @@ public class MinesAmountGUI implements InventoryProvider {
                 return;
             }
 
+            player.sendMessage(plugin.getConfiguration().getMessage("messages.minesSelected", "%mines%", Integer.toString(mines)));
             MinesGUI.open(plugin, player, mines, money);
         }));
     }

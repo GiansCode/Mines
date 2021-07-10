@@ -15,6 +15,7 @@ public class MinesGUI implements InventoryProvider {
 
     private final MinesPlugin plugin;
     private final double money;
+    private final int mines;
 
     private final boolean[][] matrix;
     private int rightMines = 0;
@@ -23,6 +24,7 @@ public class MinesGUI implements InventoryProvider {
     private MinesGUI(MinesPlugin plugin, double money, int mines) {
         this.plugin = plugin;
         this.money = money;
+        this.mines = mines;
 
         matrix = new boolean[4][5];
         int placedMines = 0;
@@ -58,6 +60,8 @@ public class MinesGUI implements InventoryProvider {
                         player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
                         player.sendMessage(plugin.getConfiguration().getMessage("messages.lostMessage"));
                         plugin.getInventoryManager().getInventory(player).ifPresent(inv -> inv.setCloseable(true));
+                        rightMines = 0;
+                        updateEndButton(player, contents);
                         finished = true;
                         return;
                     }
@@ -65,17 +69,12 @@ public class MinesGUI implements InventoryProvider {
                     contents.set(finalI + 1, finalJ + 2, ClickableItem.empty(goodMine));
                     player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
                     rightMines++;
+                    updateEndButton(player, contents);
                 }));
             }
         }
 
-        contents.set(5, 8, ClickableItem.of(plugin.getMinesGUIConfig().getItemStack("items.end"), event -> {
-            double prize = money + (money * (rightMines * 0.125));
-            plugin.getEconomy().depositPlayer(player, prize);
-            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-            player.sendMessage(plugin.getConfiguration().getMessage("messages.winMessage", "%prize%", Double.toString(prize)));
-            plugin.getInventoryManager().getInventory(player).ifPresent(inv -> inv.close(player));
-        }));
+        updateEndButton(player, contents);
     }
 
     @Override
@@ -83,9 +82,22 @@ public class MinesGUI implements InventoryProvider {
 
     }
 
+    private void updateEndButton(Player player, InventoryContents contents) {
+        contents.set(5, 8, ClickableItem.of(plugin.getMinesGUIConfig().getItemStack("items.end", "%money%", MinesPlugin.DECIMAL_FORMAT.format(money), "%multiplier%", Double.toString(mines * 0.125), "%win_money%", MinesPlugin.DECIMAL_FORMAT.format(money + (money * rightMines * mines * 0.125))), event -> {
+            if (!finished) {
+                double prize = money + (money * rightMines * mines * 0.125);
+                plugin.getEconomy().depositPlayer(player, prize);
+                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                player.sendMessage(plugin.getConfiguration().getMessage("messages.winMessage", "%prize%", MinesPlugin.DECIMAL_FORMAT.format(prize)));
+            }
+
+            plugin.getInventoryManager().getInventory(player).ifPresent(inv -> inv.close(player));
+        }));
+    }
+
     public static void open(MinesPlugin plugin, Player player, int mines, double money) {
         SmartInventory.builder()
-                .title(plugin.getBalanceGUIConfig().getLegacyMessage("title"))
+                .title(plugin.getMinesGUIConfig().getLegacyMessage("title"))
                 .size(6, 9)
                 .provider(new MinesGUI(plugin, money, mines))
                 .manager(plugin.getInventoryManager())
