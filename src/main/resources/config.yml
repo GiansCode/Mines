@@ -1,5 +1,7 @@
 maxMinesAmount: 10
 minMinesAmount: 1
+multiplier: 0.125
+expression: "money + (money * totMines * goodMines * multiplier)"
 
 messages:
   startGame: "<gold>You've started a mines game with %money%$"

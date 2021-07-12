@@ -26,6 +26,8 @@ public class MinesPlugin extends JavaPlugin {
 
     @Getter private int maxMinesAmount;
     @Getter private int minMinesAmount;
+    @Getter private double multiplier;
+    @Getter private String expression;
 
     @Override
     public void onEnable() {
@@ -65,6 +67,8 @@ public class MinesPlugin extends JavaPlugin {
 
         maxMinesAmount = configuration.getConfig().getInt("maxMinesAmount");
         minMinesAmount = configuration.getConfig().getInt("minMinesAmount");
+        multiplier = configuration.getConfig().getDouble("multiplier");
+        expression = configuration.getConfig().getString("expression");
     }
 
     private void setupManagers() {

@@ -5,6 +5,8 @@ import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
 import io.alerium.mines.MinesPlugin;
+import net.objecthunter.exp4j.Expression;
+import net.objecthunter.exp4j.ExpressionBuilder;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -83,9 +85,9 @@ public class MinesGUI implements InventoryProvider {
     }
 
     private void updateEndButton(Player player, InventoryContents contents) {
-        contents.set(5, 8, ClickableItem.of(plugin.getMinesGUIConfig().getItemStack("items.end", "%money%", MinesPlugin.DECIMAL_FORMAT.format(money), "%multiplier%", Double.toString(mines * 0.125), "%win_money%", MinesPlugin.DECIMAL_FORMAT.format(money + (money * rightMines * mines * 0.125))), event -> {
+        contents.set(5, 8, ClickableItem.of(plugin.getMinesGUIConfig().getItemStack("items.end", "%money%", MinesPlugin.DECIMAL_FORMAT.format(money), "%multiplier%", Double.toString(mines * plugin.getMultiplier()), "%win_money%", MinesPlugin.DECIMAL_FORMAT.format(calcPrize())), event -> {
             if (!finished) {
-                double prize = money + (money * rightMines * mines * 0.125);
+                double prize = calcPrize();
                 plugin.getEconomy().depositPlayer(player, prize);
                 player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
                 player.sendMessage(plugin.getConfiguration().getMessage("messages.winMessage", "%prize%", MinesPlugin.DECIMAL_FORMAT.format(prize)));
@@ -104,6 +106,18 @@ public class MinesGUI implements InventoryProvider {
                 .closeable(false)
                 .build()
                 .open(player);
+    }
+
+    private double calcPrize() {
+        Expression expression = new ExpressionBuilder(plugin.getExpression())
+                .variables("money", "totMines", "goodMines", "multiplier")
+                .build();
+
+        expression.setVariable("money", money);
+        expression.setVariable("totMines", mines);
+        expression.setVariable("goodMines", rightMines);
+        expression.setVariable("multiplier", plugin.getMultiplier());
+        return expression.evaluate();
     }
 
 }

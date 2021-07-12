@@ -29,7 +29,7 @@ public class BalanceGUI implements InventoryProvider {
                         try {
                             double money = Double.parseDouble(s);
                             if (plugin.getEconomy().has(p, money))
-                                MinesAmountGUI.open(plugin, p, money);
+                                startGame(player, money);
                             else
                                 p.sendMessage(plugin.getConfiguration().getMessage("messages.notEnoughMoney"));
 
